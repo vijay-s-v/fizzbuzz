@@ -15,13 +15,13 @@ int main(int argc, char * argv []){
 	int time1 = 0, time2 = 0, time3 = 0;
 	auto startTime = chrono::steady_clock::now();
 	auto endTime = chrono::steady_clock::now();
-	
+
 	// Not elegant, but it works
 	cout << "Begin method 1" << endl;
 	for(int x = 1; x <= ITERATIONS; x++){
 		startTime = chrono::steady_clock::now();
 		for(int i = 1; i <= n; i++){
-			if(i % 3 == 0 && i % 5 == 0){ cout << "Fizz Buzz" << endl; }
+			if(i % 3 == 0 && i % 5 == 0){ cout << "FizzBuzz" << endl; }
 			else if(i % 5 == 0){ cout << "Buzz" << endl; }
 			else if(i % 3 == 0){ cout << "Fizz" << endl; }
 			else{ cout << i << endl;}
@@ -38,7 +38,7 @@ int main(int argc, char * argv []){
 		startTime = chrono::steady_clock::now();
 		for(int i = 1; i <= n; i++){
 			// Equivalent to checking if divisible by 3 and 5
-			if(i % 15 == 0){ cout << "Fizz Buzz" << endl; }
+			if(i % 15 == 0){ cout << "FizzBuzz" << endl; }
 			else if(i % 5 == 0){ cout << "Buzz" << endl; }
 			else if(i % 3 == 0){ cout << "Fizz" << endl; }
 			else{ cout << i << endl;}
@@ -49,8 +49,25 @@ int main(int argc, char * argv []){
 	time2 = time2 / ITERATIONS;
 	cout << "End method 2" << endl << endl;
 
+	// Use one less if statement and some string manipulation
+	cout << "Begin method 3" << endl;
+	for(int x = 1; x <= ITERATIONS; x++){
+		startTime = chrono::steady_clock::now();
+		for(int i = 1; i <= n; i++){
+			string output = "";
+			if(i % 3 == 0){ output += "Fizz"; }
+			if(i % 5 == 0){ output += "Buzz"; }
+			if(!output.empty()){ cout << output << endl; continue; }
+			cout << i << endl;
+		}
+		endTime = chrono::steady_clock::now();
+		time3 += chrono::duration_cast<chrono::microseconds>(endTime - startTime).count();
+	}
+	time3 = time3 / ITERATIONS;
+	cout << "End method 3" << endl << endl;
+	
 	// Display results
 	cout << "Method 1: " << time1 << "µs" << endl;
 	cout << "Method 2: " << time2 << "µs" << endl;
-	// cout << "Method 3: " << time3 << "µs" << endl;
+	cout << "Method 3: " << time3 << "µs" << endl;	
 }
